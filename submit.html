@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>提交住宅分析｜宅運流年分析</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">宅運流年分析</div>
+      <nav class="nav">
+        <a href="index.html">返回首頁</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container narrow">
+      <p class="section-label">提交資料</p>
+      <h1 style="font-family:'Bodoni Moda',serif; font-size:clamp(2.2rem,4vw,4rem); line-height:1.08; margin:0 0 18px;">
+        提交你的住宅平面圖
+      </h1>
+      <p class="section-text" style="margin-bottom:32px;">
+        請上載已標示東南西北的住宅 floor plan，並填寫基本說明。系統只分析住宅本身的當年流年風水。
+      </p>
+
+      <form class="lux-form">
+        <label>電郵地址</label>
+        <input type="email" placeholder="name@example.com" />
+
+        <label>住宅格局補充說明</label>
+        <textarea rows="5" placeholder="例如：大門位置、廚房位置、主人房位置、是否剛裝修等"></textarea>
+
+        <label>平面圖檔案</label>
+        <div class="upload-box">請在這裡接你的上載元件 / webhook 前端</div>
+
+        <label class="check-row">
+          <input type="checkbox" />
+          <span>我已確認圖中已標示東南西北方向</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary" style="margin-top:18px;">提交分析</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
