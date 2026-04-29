@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>已收到你的提交｜宅運流年分析</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f6f1ea;
+      --surface: #fbf8f3;
+      --surface-2: #efe7dc;
+      --text: #1f1b17;
+      --muted: #6f685f;
+      --line: rgba(31, 27, 23, 0.12);
+      --primary: #355f5a;
+      --primary-dark: #274944;
+      --gold: #b5965b;
+      --white: #ffffff;
+
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(28, 22, 14, 0.08);
+      --container: 1200px;
+      --narrow: 760px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(181, 150, 91, 0.08), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(53, 95, 90, 0.08), transparent 30%),
+        var(--bg);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin: 0 auto;
+    }
+
+    .narrow {
+      max-width: var(--narrow);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(246, 241, 234, 0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+    }
+
+    .brand {
+      font-family: "Bodoni Moda", serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+    }
+
+    .nav a {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .section {
+      min-height: calc(100vh - 140px);
+      display: flex;
+      align-items: center;
+      padding: 48px 0 64px;
+    }
+
+    .card-wrap {
+      background: linear-gradient(180deg, rgba(255,255,255,0.58), rgba(255,255,255,0.38));
+      border: 1px solid rgba(255,255,255,0.68);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .card {
+      background: rgba(255,255,255,0.52);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .success-badge {
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(53, 95, 90, 0.1);
+      border: 1px solid rgba(53, 95, 90, 0.16);
+    }
+
+    .success-badge svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--primary);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.76rem;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 1.08;
+      font-weight: 700;
+    }
+
+    .lead {
+      margin: 0 auto 28px;
+      max-width: 36rem;
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    .info-grid {
+      display: grid;
+      gap: 14px;
+      margin: 0 auto 30px;
+      text-align: left;
+      max-width: 560px;
+    }
+
+    .info-item {
+      padding: 18px 18px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .info-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+      font-size: 0.98rem;
+    }
+
+    .info-item span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-outline {
+      border-color: var(--line);
+      background: rgba(255,255,255,0.5);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: var(--surface);
+    }
+
+    .site-footer {
+      padding: 20px 0 42px;
+    }
+
+    .footer-inner {
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 32px 20px;
+      }
+
+      .brand {
+        font-size: 1.08rem;
+      }
+
+      .section {
+        padding-top: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">宅運流年分析</div>
+      <nav class="nav">
+        <a href="index.html">返回首頁</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container narrow">
+      <div class="card-wrap">
+        <div class="card">
+          <div class="success-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"></path>
+            </svg>
+          </div>
+
+          <p class="eyebrow">Submission Received</p>
+          <h1>已收到你的提交</h1>
+          <p class="lead">
+            你的住宅平面圖與補充資料已成功送出。系統將按住宅格局與圖中方位標示，進行當年流年風水分析。
+          </p>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>下一步</strong>
+              <span>系統會先記錄資料，然後進入分析流程。</span>
+            </div>
+
+            <div class="info-item">
+              <strong>分析範圍</strong>
+              <span>只分析住宅本身的當年流年風水，不涉及個人八字、命卦或非住宅用途內容。</span>
+            </div>
+
+            <div class="info-item">
+              <strong>結果發送</strong>
+              <span>完成後，分析結果將發送到你提交的電郵地址。</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a href="index.html" class="btn btn-primary">返回首頁</a>
+            <a href="submit.html" class="btn btn-outline">提交另一個住宅</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 宅運流年分析</p>
+    </div>
+  </footer>
+</body>
+</html>
