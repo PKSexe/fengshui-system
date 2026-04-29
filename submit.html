@@ -9,7 +9,249 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --bg: #f6f1ea;
+      --surface: #fbf8f3;
+      --surface-2: #efe7dc;
+      --text: #1f1b17;
+      --muted: #6f685f;
+      --line: rgba(31, 27, 23, 0.12);
+      --primary: #355f5a;
+      --primary-dark: #274944;
+      --gold: #b5965b;
+      --white: #ffffff;
+      --error: #9b3d3d;
+
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(28, 22, 14, 0.08);
+      --container: 1200px;
+      --narrow: 760px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(181, 150, 91, 0.08), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(53, 95, 90, 0.08), transparent 30%),
+        var(--bg);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin: 0 auto;
+    }
+
+    .narrow {
+      max-width: var(--narrow);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(246, 241, 234, 0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+    }
+
+    .brand {
+      font-family: "Bodoni Moda", serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav a {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 22px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .section {
+      padding: 72px 0 88px;
+    }
+
+    .section-label {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.76rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 1.08;
+      font-weight: 700;
+    }
+
+    .section-text {
+      margin: 0 0 32px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .lux-form-wrap {
+      background: linear-gradient(180deg, rgba(255,255,255,0.58), rgba(255,255,255,0.38));
+      border: 1px solid rgba(255,255,255,0.68);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .lux-form {
+      display: grid;
+      gap: 14px;
+      padding: 28px;
+      background: rgba(255,255,255,0.52);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+    }
+
+    .lux-form label {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .lux-form input[type="email"],
+    .lux-form textarea,
+    .lux-form input[type="file"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fffdf9;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--text);
+      outline: none;
+    }
+
+    .lux-form input[type="email"]:focus,
+    .lux-form textarea:focus,
+    .lux-form input[type="file"]:focus {
+      border-color: rgba(181, 150, 91, 0.75);
+      box-shadow: 0 0 0 4px rgba(181, 150, 91, 0.12);
+    }
+
+    .lux-form input[type="file"] {
+      border-style: dashed;
+      background: rgba(53, 95, 90, 0.04);
+      color: var(--muted);
+      padding: 18px;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .check-row input {
+      margin-top: 5px;
+      transform: scale(1.1);
+    }
+
+    .form-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: -2px;
+    }
+
+    .error-box {
+      display: none;
+      background: rgba(155, 61, 61, 0.08);
+      border: 1px solid rgba(155, 61, 61, 0.2);
+      color: var(--error);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 0.94rem;
+    }
+
+    .site-footer {
+      padding: 20px 0 42px;
+    }
+
+    .footer-inner {
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        padding-top: 44px;
+      }
+
+      .nav {
+        gap: 12px;
+      }
+
+      .brand {
+        font-size: 1.08rem;
+      }
+
+      .lux-form {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -24,33 +266,106 @@
   <main class="section">
     <div class="container narrow">
       <p class="section-label">提交資料</p>
-      <h1 style="font-family:'Bodoni Moda',serif; font-size:clamp(2.2rem,4vw,4rem); line-height:1.08; margin:0 0 18px;">
-        提交你的住宅平面圖
-      </h1>
-      <p class="section-text" style="margin-bottom:32px;">
+      <h1>提交你的住宅平面圖</h1>
+      <p class="section-text">
         請上載已標示東南西北的住宅 floor plan，並填寫基本說明。系統只分析住宅本身的當年流年風水。
       </p>
 
-      <form class="lux-form">
-        <label>電郵地址</label>
-        <input type="email" placeholder="name@example.com" />
+      <div class="lux-form-wrap">
+        <form
+          id="fengshuiForm"
+          class="lux-form"
+          action="https://hook.eu1.make.com/d4pi9lgzmfiumtvk7hzmfvwwc5mjvm4y"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div id="errorBox" class="error-box"></div>
 
-        <label>住宅格局補充說明</label>
-        <textarea rows="5" placeholder="例如：大門位置、廚房位置、主人房位置、是否剛裝修等"></textarea>
+          <label for="customer_email">電郵地址</label>
+          <input
+            type="email"
+            id="customer_email"
+            name="customer_email"
+            placeholder="name@example.com"
+            required
+          />
 
-        <label>平面圖檔案</label>
-        <div class="upload-box">請在這裡接你的上載元件 / webhook 前端</div>
+          <label for="layout_notes">住宅格局補充說明</label>
+          <textarea
+            id="layout_notes"
+            name="layout_notes"
+            rows="5"
+            placeholder="例如：大門位置、廚房位置、廁所位置、主人房位置、是否剛裝修等"
+          ></textarea>
 
-        <label class="check-row">
-          <input type="checkbox" />
-          <span>我已確認圖中已標示東南西北方向</span>
-        </label>
+          <label for="floor_plan">平面圖檔案</label>
+          <input
+            type="file"
+            id="floor_plan"
+            name="floor_plan"
+            accept=".jpg,.jpeg,.png,.pdf"
+            required
+          />
+          <div class="form-note">接受 JPG、JPEG、PNG、PDF。</div>
 
-        <button type="submit" class="btn btn-primary" style="margin-top:18px;">提交分析</button>
-      </form>
+          <label class="check-row" for="direction_mark_check">
+            <input
+              type="checkbox"
+              id="direction_mark_check"
+              name="direction_mark_check"
+              value="yes"
+              required
+            />
+            <span>我已確認圖中已標示東南西北方向</span>
+          </label>
+
+          <button type="submit" class="btn btn-primary" id="submitBtn">提交分析</button>
+        </form>
+      </div>
     </div>
   </main>
 
-  <script src="script.js"></script>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 宅運流年分析</p>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById("fengshuiForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const errorBox = document.getElementById("errorBox");
+    const fileInput = document.getElementById("floor_plan");
+
+    form.addEventListener("submit", function (e) {
+      errorBox.style.display = "none";
+      errorBox.textContent = "";
+
+      const file = fileInput.files[0];
+
+      if (!file) {
+        e.preventDefault();
+        errorBox.textContent = "請上載住宅平面圖。";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "application/pdf"
+      ];
+
+      if (!allowedTypes.includes(file.type)) {
+        e.preventDefault();
+        errorBox.textContent = "只接受 JPG、PNG 或 PDF 檔案。";
+        errorBox.style.display = "block";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "提交中...";
+    });
+  </script>
 </body>
 </html>
