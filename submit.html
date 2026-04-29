@@ -22,6 +22,7 @@
       --gold: #b5965b;
       --white: #ffffff;
       --error: #9b3d3d;
+      --success: #355f5a;
 
       --radius: 20px;
       --shadow: 0 10px 30px rgba(28, 22, 14, 0.08);
@@ -115,6 +116,11 @@
 
     .btn-primary:hover {
       background: var(--primary-dark);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
     }
 
     .section {
@@ -213,14 +219,23 @@
       margin-top: -2px;
     }
 
-    .error-box {
+    .message-box {
       display: none;
-      background: rgba(155, 61, 61, 0.08);
-      border: 1px solid rgba(155, 61, 61, 0.2);
-      color: var(--error);
       padding: 12px 14px;
       border-radius: 14px;
       font-size: 0.94rem;
+    }
+
+    .message-box.error {
+      background: rgba(155, 61, 61, 0.08);
+      border: 1px solid rgba(155, 61, 61, 0.2);
+      color: var(--error);
+    }
+
+    .message-box.success {
+      background: rgba(53, 95, 90, 0.08);
+      border: 1px solid rgba(53, 95, 90, 0.2);
+      color: var(--success);
     }
 
     .site-footer {
@@ -272,14 +287,9 @@
       </p>
 
       <div class="lux-form-wrap">
-        <form
-          id="fengshuiForm"
-          class="lux-form"
-          action="https://hook.eu1.make.com/d4pi9lgzmfiumtvk7hzmfvwwc5mjvm4y"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <div id="errorBox" class="error-box"></div>
+        <form id="fengshuiForm" class="lux-form">
+          <div id="errorBox" class="message-box error"></div>
+          <div id="successBox" class="message-box success"></div>
 
           <label for="customer_email">電郵地址</label>
           <input
@@ -332,39 +342,68 @@
   </footer>
 
   <script>
+    const WEBHOOK_URL = "https://hook.eu1.make.com/d4pi9lgzmfiumtvk7hzmfvwwc5mjvm4y";
+
     const form = document.getElementById("fengshuiForm");
     const submitBtn = document.getElementById("submitBtn");
     const errorBox = document.getElementById("errorBox");
+    const successBox = document.getElementById("successBox");
     const fileInput = document.getElementById("floor_plan");
 
-    form.addEventListener("submit", function (e) {
+    function showError(message) {
+      successBox.style.display = "none";
+      errorBox.textContent = message;
+      errorBox.style.display = "block";
+    }
+
+    function showSuccess(message) {
       errorBox.style.display = "none";
-      errorBox.textContent = "";
+      successBox.textContent = message;
+      successBox.style.display = "block";
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      errorBox.style.display = "none";
+      successBox.style.display = "none";
 
       const file = fileInput.files[0];
 
       if (!file) {
-        e.preventDefault();
-        errorBox.textContent = "請上載住宅平面圖。";
-        errorBox.style.display = "block";
+        showError("請上載住宅平面圖。");
         return;
       }
 
-      const allowedTypes = [
-        "image/jpeg",
-        "image/png",
-        "application/pdf"
-      ];
-
+      const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
       if (!allowedTypes.includes(file.type)) {
-        e.preventDefault();
-        errorBox.textContent = "只接受 JPG、PNG 或 PDF 檔案。";
-        errorBox.style.display = "block";
+        showError("只接受 JPG、PNG 或 PDF 檔案。");
         return;
       }
 
       submitBtn.disabled = true;
       submitBtn.textContent = "提交中...";
+
+      try {
+        const formData = new FormData(form);
+
+        const response = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error("提交失敗，請稍後再試。");
+        }
+
+        showSuccess("提交成功，正在跳轉...");
+        window.location.href = "thank-you.html";
+      } catch (error) {
+        showError("提交失敗，請檢查網絡或稍後再試。");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "提交分析";
+      }
     });
   </script>
 </body>
